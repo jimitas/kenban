@@ -1,0 +1,155 @@
+#select_box {
+  width: 200px;
+  height: 30px;
+  margin: 10px;
+}
+
+#description2 {
+  position: absolute;
+  top: 320px;
+}
+
+// button {
+//   cursor: pointer;
+// }
+
+// select,
+// label,
+// input {
+//   cursor: pointer;
+// }
+
+#kenban_pallet {
+  width: 960px;
+  height: 400px;
+  background-color: antiquewhite;
+}
+
+#kenban {
+  position: relative;
+}
+
+.key {
+  position: absolute;
+  font-size: 16px;
+  user-select: none;
+  &:hover {
+    /*ボタン色*/
+    background-color: #ff6c94;
+  }
+  &:active {
+    /*ボタンを押したとき*/
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    /*下に動く*/
+    border-bottom: none;
+    /*線を消す*/
+  }
+}
+
+.whiteKey {
+  top: 0px;
+  width: 50px;
+  height: 240px;
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  z-index: 1;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  & .pushKeyName {
+    position: static;
+    text-align: center;
+    margin-top: 100px;
+  }
+  & .toggle-button {
+    bottom: 50px;
+    left: 14px;
+    border: 1px solid black;
+  }
+  & .keyNote {
+    bottom: 20px;
+    left: 15px;
+  }
+}
+
+.blackKey {
+  top: 0px;
+  width: 30px;
+  height: 160px;
+  text-align: center;
+  color: white;
+  background-color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  z-index: 10;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  & :hover {
+    background-color: #ff6c94;
+  }
+  & .pushKeyName {
+    top: 5px;
+    left: 10px;
+    font-size: 16px;
+  }
+  & .toggle-button {
+    font-size: 16px;
+    top: 60px;
+    left: 4px;
+    border: 1px solid white;
+  }
+  & .keyNote {
+    font-size: 12px;
+    bottom: 35px;
+    left: 2px;
+  }
+}
+
+.keyNote {
+  position: absolute;
+}
+
+.pushKeyName {
+  position: absolute;
+}
+
+.toggle-button {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: none;
+  cursor: pointer;
+}
+
+.toggle-button input {
+  display: none;
+}
+
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  
+}
+
+@media (prefers-reduced-motion) {
+ 
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  
+}
+
+/* Tablet and Smaller Desktop */
+@media (min-width: 701px) and (max-width: 1120px) {
+  
+}
+
+@media (prefers-color-scheme: dark) {
+ 
+}
+
+@keyframes rotate {
+  
+}
