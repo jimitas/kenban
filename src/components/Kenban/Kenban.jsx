@@ -39,7 +39,6 @@ for (let i = 0; i < keyLength; i++) {
   });
 }
 
-console.log(KENBAN)
 export function Kenban(props) {
   return (
     <div>
