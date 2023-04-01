@@ -57,6 +57,7 @@ export function Kenban(props) {
   const [isShow1, setIsShow1] = useState(false);
   const [isShow2, setIsShow2] = useState(true);
   const [isShow3, setIsShow3] = useState(false);
+  const [isShow4, setIsShow4] = useState(false);
   const [isAllowColor, setIsAllowColor] = useState(false);
   const [text, setText] = useState("none");
   const el_select = useRef(0);
@@ -79,11 +80,10 @@ export function Kenban(props) {
       return !isShow3;
     });
   };
-  const check = (e) => {
-    // setText((text) => e.target.id + "onONONONONON");
-  };
-  const check_out = (e) => {
-    // setText((text) => e.target.id + "isOut");
+  const changeIsShow4 = () => {
+    setIsShow4((isShow4) => {
+      return !isShow4;
+    });
   };
 
   const changeColor = (e) => {
@@ -91,6 +91,29 @@ export function Kenban(props) {
     e.target.style.backgroundColor === "yellow"
       ? (e.target.style.backgroundColor = null)
       : (e.target.style.backgroundColor = "yellow");
+  };
+
+  const playSound = (e) => {
+    const index = e.target.id.slice(1);
+    if (KENBAN[index].pushed) return;
+    KENBAN[index].pushed = true;
+    se[index].play();
+  };
+
+  const stopSound = (e) => {
+    if (isShow4) return;
+    const index = e.target.id.slice(1);
+    se[index].pause();
+    se[index].seek(0);
+    KENBAN[index].pushed = false;
+  };
+  
+  const soundAllStop = () => {
+    for (let i = 0; i < keyLength; i++) {
+      se[i].pause();
+      se[i].seek(0);
+      KENBAN[i].pushed = false;
+    }
   };
 
   return (
@@ -114,42 +137,44 @@ export function Kenban(props) {
         しるしをつける
       </label>
       <label for="sustain">
-        <input type="checkbox" id="sustain" />
+        <input type="checkbox" id="sustain" onChange={changeIsShow4} />
         　音をのばす　
       </label>
+      <button onClick={soundAllStop}>音を止める</button>
 
       <div className={styles.kenban}>
         {KENBAN.map((item) => {
           return (
             <div
               key={item.id}
-              id={item.id}
+              id={"k" + item.id}
               className={
                 item.class === "white" ? `${styles.key} ${styles.whiteKey}` : `${styles.key} ${styles.blackKey}`
               }
               style={{ left: `${item.leftPosition}px` }}
-              onMouseDown={check}
-              onTouchStart={check}
-              onMouseUp={check_out}
-              onTouchEnd={check_out}
+              onMouseDown={playSound}
+              onTouchStart={playSound}
+              onMouseUp={stopSound}
+              onTouchEnd={stopSound}
             >
               {isShow2 ? (
-                <div className={styles.pushKeyName}>
+                <div id={"p" + item.id} className={styles.pushKeyName}>
                   {item.pushLetter2}
                   {<br />}
                   {item.pushLetter1}
                 </div>
               ) : null}
+
               <div id={"t" + item.id} className={styles.toggleButton} onClick={changeColor}></div>
 
               {selectValue === 0 ? (
-                <div className={styles.keyNote}>
+                <div id={"n" + item.id} className={styles.keyNote}>
                   {item.solfa2}
                   {<br />}
                   {item.solfa1}
                 </div>
               ) : selectValue === 1 ? (
-                <div className={styles.keyNote}>
+                <div id={"n" + item.id} className={styles.keyNote}>
                   {item.toneName2}
                   {<br />}
                   {item.toneName1}
