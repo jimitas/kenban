@@ -64,6 +64,7 @@ export function Kenban(props) {
   const changeSelectValue = () => {
     setSelectValue((selectValue) => el_select.current.selectedIndex);
   };
+  //ピンチズームを可能にするためのコードを今は保留中
   const changeIsShow1 = () => {
     setIsShow1((isShow1) => {
       return !isShow1;
@@ -148,10 +149,10 @@ export function Kenban(props) {
         <option value="3">表記しない</option>
       </select>
 
-      <label htmlFor="pinchZoom">
+      {/* <label htmlFor="pinchZoom">
         <input id="pinchZoom" type="checkbox" onChange={changeIsShow1} />
         ピンチズームを可能にする
-      </label>
+      </label> */}
       <label for="keyDown">
         <input type="checkbox" id="keyDown" onChange={changeIsShow2} checked={isShow2} />
         キーを表示する
