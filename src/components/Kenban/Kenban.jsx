@@ -7,7 +7,6 @@ import styles from "./Kenban.module.css";
 // ピンチズームを可能にする。
 // サスティンで伸ばしているとき、押したキーに色が付いたまま
 
-
 //ピンチズームを可能・不可にする。
 const touchHandler = (event) => {
   if (event.touches.length > 1) {
@@ -63,8 +62,6 @@ export function Kenban(props) {
   const [isShow2, setIsShow2] = useState(true);
   const [isShow3, setIsShow3] = useState(false);
   const [isShow4, setIsShow4] = useState(false);
-  const [isAllowColor, setIsAllowColor] = useState(false);
-  const [text, setText] = useState("none");
   const el_select = useRef(0);
 
   const changeSelectValue = () => {
@@ -90,7 +87,6 @@ export function Kenban(props) {
       return !isShow4;
     });
   };
-
   const changeColor = (e) => {
     if (!isShow3) return;
     e.target.style.backgroundColor === "yellow"
@@ -98,13 +94,38 @@ export function Kenban(props) {
       : (e.target.style.backgroundColor = "yellow");
   };
 
+  //何のキーが押されたかを判定してコードを返す
+  const check_code = (e) => {
+    e.preventDefault();
+    const target = e.code;
+    const index1 = data.pushCode1.indexOf(target);
+    const index2 = data.pushCode2.indexOf(target);
+    const index = Math.max(index1, index2);
+    return index;
+  };
   const playSound = (e) => {
     const index = e.target.id.slice(1);
     if (KENBAN[index].pushed) return;
     KENBAN[index].pushed = true;
     se[index].play();
   };
-
+  const KeyDown = (e) => {
+    const index = check_code(e);
+    if (index === -1 || undefined) return;
+    if (KENBAN[index].pushed) return;
+    KENBAN[index].pushed = true;
+    se[index].play();
+    document.getElementById("k" + index).style.backgroundColor = "rgba(252, 165, 165)";
+  };
+  const KeyUp = (e) => {
+    if (isShow4) return;
+    const index = check_code(e);
+    if (index === -1 || undefined) return;
+    se[index].pause();
+    se[index].seek(0);
+    KENBAN[index].pushed = false;
+    document.getElementById("k" + index).style.backgroundColor = KENBAN[index].bgColor;
+  };
   const stopSound = (e) => {
     if (isShow4) return;
     const index = e.target.id.slice(1);
@@ -112,7 +133,7 @@ export function Kenban(props) {
     se[index].seek(0);
     KENBAN[index].pushed = false;
   };
-  
+
   const soundAllStop = () => {
     for (let i = 0; i < keyLength; i++) {
       se[i].pause();
@@ -143,9 +164,13 @@ export function Kenban(props) {
       </label>
       <label for="sustain">
         <input type="checkbox" id="sustain" onChange={changeIsShow4} />
-        　音をのばす　
+        音をのばす
       </label>
       <button onClick={soundAllStop}>音を止める</button>
+
+      <button type="text" onKeyDown={KeyDown} onKeyUp={KeyUp} value="test">
+        キーボード入力ON
+      </button>
 
       <div className={styles.kenban}>
         {KENBAN.map((item) => {
