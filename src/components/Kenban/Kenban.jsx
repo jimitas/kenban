@@ -17,9 +17,6 @@ const swipeHandler = (event) => {
   event.preventDefault();
 };
 
-// var se = [""];
-// var keyDownResult;
-// var Key_flag = [];
 const keyLength = 32;
 
 const se = [];
@@ -168,7 +165,7 @@ export function Kenban(props) {
       </label>
       <button onClick={soundAllStop}>音を止める</button>
 
-      <button type="text" onKeyDown={KeyDown} onKeyUp={KeyUp} value="test">
+      <button type="text" onClick={(e)=>{e.target.style.backgroundColor="yellow"}} onKeyDown={KeyDown} onKeyUp={KeyUp} value="test">
         キーボード入力ON
       </button>
 

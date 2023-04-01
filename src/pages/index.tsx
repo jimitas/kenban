@@ -21,7 +21,15 @@ export default function Home() {
   return (
     <Layout title="けんばん">
       <p className="text-xs">
-        スマートフォン等で上手く表示されない場合、ブラウザのメニューから「PC版で開く」を選んで表示してください。<br/>キーを押しても音が出ない場合は「音を止める」ボタンを一度押してリセットしてください。
+        音楽の授業で指導用として使えるキーボードです。児童練習用は
+        <a href="https://jimitas-app.vercel.app/10kenban">こちら</a>
+        <br />
+        注目させたいキーに色をつけたり、音をのばしたままにしたりできるので、
+        <span style={{color:"orangered"}}>音階やハーモニーの学習に適しています。</span>
+        <br />
+        キーを押しても音が出ない場合は「音を止める」ボタンを一度押してリセットしてください。
+        <br />
+        スマートフォン等で上手く表示されない場合、ブラウザのメニューから「PC版で開く」を選んで表示してください。
       </p>
       {/* <select ref={el_select} onChange={changeGakki} className="select m-8">
         {ITEM.map((item) => {
