@@ -71,7 +71,8 @@ export function Kenban(props) {
     document.addEventListener("touchstart", touchHandler, {
       passive: false,
     });
-    //スワイプを禁止する。
+    //スワイプを禁止する。も
+    
     document.addEventListener("touchmove", swipeHandler, { passive: false });
   }
   const changeSelectValue = () => {
