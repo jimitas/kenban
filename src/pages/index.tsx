@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <Layout title="けんばん">
       <p className="text-xs">
-        音楽の授業で指導用として使えるキーボードです。児童練習用は
+        音楽の授業でテレビ等に写して指導する用途のキーボードです。児童練習用は
         <a href="https://jimitas-app.vercel.app/10kenban">こちら</a>
         <br />
         注目させたいキーに色をつけたり、音をのばしたままにしたりできるので、
