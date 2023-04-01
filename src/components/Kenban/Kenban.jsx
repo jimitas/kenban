@@ -53,11 +53,6 @@ for (let i = 0; i < keyLength; i++) {
 }
 
 export function Kenban(props) {
-  //右クリック禁止を禁止にする。
-  document.oncontextmenu = () => {
-    return false;
-  };
-
   const [selectValue, setSelectValue] = useState(0);
   const [isShow1, setIsShow1] = useState(false);
   const [isShow2, setIsShow2] = useState(true);
@@ -66,15 +61,6 @@ export function Kenban(props) {
   const [text, setText] = useState("none");
   const el_select = useRef(0);
 
-  if (!isShow1) {
-    //ピンチズームを可能・不可にする。
-    document.addEventListener("touchstart", touchHandler, {
-      passive: false,
-    });
-    //スワイプを禁止する。も
-    
-    document.addEventListener("touchmove", swipeHandler, { passive: false });
-  }
   const changeSelectValue = () => {
     setSelectValue((selectValue) => el_select.current.selectedIndex);
   };
