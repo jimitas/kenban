@@ -74,11 +74,9 @@ export function Kenban(props) {
     //スワイプを禁止する。
     document.addEventListener("touchmove", swipeHandler, { passive: false });
   }
-
   const changeSelectValue = () => {
     setSelectValue((selectValue) => el_select.current.selectedIndex);
   };
-
   const changeIsShow1 = () => {
     setIsShow1((isShow1) => {
       return !isShow1;
@@ -94,7 +92,6 @@ export function Kenban(props) {
       return !isShow3;
     });
   };
-
   const check = (e) => {
     // setText((text) => e.target.id + "onONONONONON");
   };
