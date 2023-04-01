@@ -101,6 +101,7 @@ export function Kenban(props) {
     return index;
   };
   const playSound = (e) => {
+    e.preventDefault();
     const index = e.target.id.slice(1);
     if (KENBAN[index].pushed) return;
     KENBAN[index].pushed = true;
