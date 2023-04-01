@@ -16,8 +16,9 @@
   background-color: antiquewhite;
 }
 
-#kenban {
-  position: relative;
+.kenban {
+  position: absolute;
+  top: 200px;
 }
 
 .key {

@@ -1,6 +1,17 @@
 import { Howl } from "howler";
 import * as data from "./data";
+import { useState, useRef } from "react";
 import styles from "./Kenban.module.css";
+
+//ピンチズームを可能・不可にする。
+const touchHandler = (event) => {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+};
+const swipeHandler = (event) => {
+  event.preventDefault();
+};
 
 // var se = [""];
 // var keyDownResult;
@@ -42,33 +53,128 @@ for (let i = 0; i < keyLength; i++) {
 }
 
 export function Kenban(props) {
+  //右クリック禁止を禁止にする。
+  document.oncontextmenu = () => {
+    return false;
+  };
+
+  const [selectValue, setSelectValue] = useState(0);
+  const [isShow1, setIsShow1] = useState(false);
+  const [isShow2, setIsShow2] = useState(true);
+  const [isShow3, setIsShow3] = useState(false);
+  const [isAllowColor, setIsAllowColor] = useState(false);
+  const [text, setText] = useState("none");
+  const el_select = useRef(0);
+
+  if (!isShow1) {
+    //ピンチズームを可能・不可にする。
+    document.addEventListener("touchstart", touchHandler, {
+      passive: false,
+    });
+    //スワイプを禁止する。
+    document.addEventListener("touchmove", swipeHandler, { passive: false });
+  }
+
+  const changeSelectValue = () => {
+    setSelectValue((selectValue) => el_select.current.selectedIndex);
+  };
+
+  const changeIsShow1 = () => {
+    setIsShow1((isShow1) => {
+      return !isShow1;
+    });
+  };
+  const changeIsShow2 = () => {
+    setIsShow2((isShow2) => {
+      return !isShow2;
+    });
+  };
+  const changeIsShow3 = () => {
+    setIsShow3((isShow3) => {
+      return !isShow3;
+    });
+  };
+
+  const check = (e) => {
+    // setText((text) => e.target.id + "onONONONONON");
+  };
+  const check_out = (e) => {
+    // setText((text) => e.target.id + "isOut");
+  };
+
+  const changeColor = (e) => {
+    if (!isShow3) return;
+    e.target.style.backgroundColor === "yellow"
+      ? (e.target.style.backgroundColor = null)
+      : (e.target.style.backgroundColor = "yellow");
+  };
+
   return (
     <div>
-      {KENBAN.map((item) => {
-        return (
-          <div key={item.id}>
+      <select ref={el_select} name="" id="keyName" onChange={changeSelectValue}>
+        <option value="1">階名表記</option>
+        <option value="2">英語名表記</option>
+        <option value="3">表記しない</option>
+      </select>
+
+      <label htmlFor="pinchZoom">
+        <input id="pinchZoom" type="checkbox" onChange={changeIsShow1} />
+        ピンチズームを可能にする
+      </label>
+      <label for="keyDown">
+        <input type="checkbox" id="keyDown" onChange={changeIsShow2} checked={isShow2} />
+        キーを表示する
+      </label>
+      <label for="checkMark">
+        <input type="checkbox" id="checkMark" onChange={changeIsShow3} />
+        しるしをつける
+      </label>
+      <label for="sustain">
+        <input type="checkbox" id="sustain" />
+        　音をのばす　
+      </label>
+
+      <div className={styles.kenban}>
+        {KENBAN.map((item) => {
+          return (
             <div
+              key={item.id}
               id={item.id}
               className={
                 item.class === "white" ? `${styles.key} ${styles.whiteKey}` : `${styles.key} ${styles.blackKey}`
               }
               style={{ left: `${item.leftPosition}px` }}
+              onMouseDown={check}
+              onTouchStart={check}
+              onMouseUp={check_out}
+              onTouchEnd={check_out}
             >
-              <div className={styles.pushKeyName}>
-                {item.pushLetter2}
-                {<br />}
-                {item.pushLetter1}
-              </div>
-              <div className={styles.toggleButton}></div>
-              <div className={styles.keyNote}>
-                {item.toneName2}
-                {<br />}
-                {item.toneName1}
-              </div>
+              {isShow2 ? (
+                <div className={styles.pushKeyName}>
+                  {item.pushLetter2}
+                  {<br />}
+                  {item.pushLetter1}
+                </div>
+              ) : null}
+              <div id={"t" + item.id} className={styles.toggleButton} onClick={changeColor}></div>
+
+              {selectValue === 0 ? (
+                <div className={styles.keyNote}>
+                  {item.solfa2}
+                  {<br />}
+                  {item.solfa1}
+                </div>
+              ) : selectValue === 1 ? (
+                <div className={styles.keyNote}>
+                  {item.toneName2}
+                  {<br />}
+                  {item.toneName1}
+                </div>
+              ) : null}
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
