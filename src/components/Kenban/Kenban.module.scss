@@ -62,7 +62,7 @@
     text-align: center;
     margin-top: 100px;
   }
-  & .toggle-button {
+  & .toggleButton {
     bottom: 50px;
     left: 14px;
     border: 1px solid black;
@@ -92,7 +92,7 @@
     left: 10px;
     font-size: 16px;
   }
-  & .toggle-button {
+  & .toggleButton {
     font-size: 16px;
     top: 60px;
     left: 4px;
@@ -113,16 +113,15 @@
   position: absolute;
 }
 
-.toggle-button {
+.toggleButton {
   width: 20px;
   height: 20px;
   position: absolute;
   border-radius: 50%;
-  background-color: none;
   cursor: pointer;
 }
 
-.toggle-button input {
+.toggleButton input {
   display: none;
 }
 
