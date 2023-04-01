@@ -3,6 +3,11 @@ import * as data from "./data";
 import { useState, useRef } from "react";
 import styles from "./Kenban.module.css";
 
+// 4/2 todo キー入力を可能にする。
+// ピンチズームを可能にする。
+// サスティンで伸ばしているとき、押したキーに色が付いたまま
+
+
 //ピンチズームを可能・不可にする。
 const touchHandler = (event) => {
   if (event.touches.length > 1) {
