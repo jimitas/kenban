@@ -21,9 +21,9 @@ export default function Home() {
   return (
     <Layout title="けんばん">
       <p className="text-xs">
-        スマートフォン等で上手く表示されない場合、ブラウザのメニューから「PC版で開く」を選んで表示してください。
+        スマートフォン等で上手く表示されない場合、ブラウザのメニューから「PC版で開く」を選んで表示してください。<br/>キーを押しても音が出ない場合は「音を止める」ボタンを一度押してリセットしてください。
       </p>
-      <select ref={el_select} onChange={changeGakki} className="select m-8">
+      {/* <select ref={el_select} onChange={changeGakki} className="select m-8">
         {ITEM.map((item) => {
           return (
             <option key={item} value={item}>
@@ -31,7 +31,7 @@ export default function Home() {
             </option>
           );
         })}
-      </select>
+      </select> */}
       <Kenban gakki={gakkiName} />
     </Layout>
   );
