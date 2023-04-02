@@ -1,6 +1,6 @@
 import { Howl } from "howler";
 import * as data from "./data";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import styles from "./Kenban.module.css";
 
 // 4/2 todo キー入力を可能にする。
@@ -18,20 +18,6 @@ const swipeHandler = (event) => {
 };
 
 const keyLength = 32;
-
-const se = [];
-// インスタンスを生成
-for (let i = 0; i < keyLength; i++) {
-  se[i] = new Howl({
-    src: [`Sounds/re_${i + 1}.mp3`],
-    //読み込む音声ファイル
-    // 設定 (以下はデフォルト値です)
-    preload: true, // 事前ロード
-    volume: 1.0, // 音量(0.0〜1.0の範囲で指定)
-    loop: false, // ループ再生するか
-    autoplay: false, // 自動再生するか
-  });
-}
 
 const KENBAN = [];
 for (let i = 0; i < keyLength; i++) {
@@ -55,15 +41,35 @@ for (let i = 0; i < keyLength; i++) {
 
 export function Kenban(props) {
   const [selectValue, setSelectValue] = useState(0);
+  const [volume, setVolume] = useState(0.5);
   const [isShow1, setIsShow1] = useState(false);
   const [isShow2, setIsShow2] = useState(true);
   const [isShow3, setIsShow3] = useState(false);
   const [isShow4, setIsShow4] = useState(false);
   const el_select = useRef(0);
+  const el_volume = useRef(0.5);
+
+  const se = [];
+  // インスタンスを生成
+  for (let i = 0; i < keyLength; i++) {
+    se[i] = new Howl({
+      src: [`Sounds/sine_${i}.mp3`],
+      //読み込む音声ファイル
+      // 設定 (以下はデフォルト値です)
+      preload: true, // 事前ロード
+      volume: volume, // 音量(0.0〜1.0の範囲で指定)
+      loop: false, // ループ再生するか
+      autoplay: false, // 自動再生するか
+    });
+  }
 
   const changeSelectValue = () => {
     setSelectValue((selectValue) => el_select.current.selectedIndex);
   };
+  const changeVolume = () => {
+    setVolume((volume) => el_volume.current.value);
+  };
+
   //ピンチズームを可能にするためのコードを今は保留中
   const changeIsShow1 = () => {
     setIsShow1((isShow1) => {
@@ -85,6 +91,7 @@ export function Kenban(props) {
       return !isShow4;
     });
   };
+
   const changeColor = (e) => {
     if (!isShow3) return;
     e.target.style.backgroundColor === "yellow"
@@ -107,6 +114,7 @@ export function Kenban(props) {
     if (KENBAN[index].pushed) return;
     KENBAN[index].pushed = true;
     se[index].play();
+    document.getElementById("k" + index).style.backgroundColor = "rgba(252, 165, 165)";
   };
   const KeyDown = (e) => {
     const index = check_code(e);
@@ -131,6 +139,7 @@ export function Kenban(props) {
     se[index].pause();
     se[index].seek(0);
     KENBAN[index].pushed = false;
+    document.getElementById("k" + index).style.backgroundColor = KENBAN[index].bgColor;
   };
 
   const soundAllStop = () => {
@@ -138,6 +147,7 @@ export function Kenban(props) {
       se[i].pause();
       se[i].seek(0);
       KENBAN[i].pushed = false;
+      document.getElementById("k" + i).style.backgroundColor = KENBAN[i].bgColor;
     }
   };
 
@@ -148,7 +158,19 @@ export function Kenban(props) {
         <option value="2">英語名表記</option>
         <option value="3">表記しない</option>
       </select>
-
+      <label htmlFor="">
+        Volume
+        <input
+          style={{ width: "200px" }}
+          onChange={changeVolume}
+          ref={el_volume}
+          type="range"
+          value={volume}
+          max="1"
+          min="0"
+          step="0.05"
+        />
+      </label>
       {/* <label htmlFor="pinchZoom">
         <input id="pinchZoom" type="checkbox" onChange={changeIsShow1} />
         ピンチズームを可能にする
@@ -167,7 +189,15 @@ export function Kenban(props) {
       </label>
       <button onClick={soundAllStop}>音を止める</button>
 
-      <button type="text" onClick={(e)=>{e.target.style.backgroundColor="yellow"}} onKeyDown={KeyDown} onKeyUp={KeyUp} value="test">
+      <button
+        type="text"
+        onClick={(e) => {
+          e.target.style.backgroundColor = "yellow";
+        }}
+        onKeyDown={KeyDown}
+        onKeyUp={KeyUp}
+        value="test"
+      >
         キーボード入力ON
       </button>
 

@@ -34,10 +34,7 @@
   position: absolute;
   font-size: 16px;
   user-select: none;
-  &:hover {
-    /*ボタン色*/
-    background-color: #ff6c94;
-  }
+
   &:active {
     /*ボタンを押したとき*/
     -webkit-transform: translateY(4px);
@@ -67,6 +64,7 @@
     bottom: 50px;
     left: 14px;
     border: 1px solid black;
+    z-index: 1000;
   }
   & .keyNote {
     bottom: 20px;
@@ -85,9 +83,7 @@
   border-radius: 5px;
   z-index: 10;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  & :hover {
-    background-color: #ff6c94;
-  }
+
   & .pushKeyName {
     top: 5px;
     left: 10px;
