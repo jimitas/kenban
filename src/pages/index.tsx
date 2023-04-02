@@ -28,8 +28,6 @@ export default function Home() {
         <span style={{color:"orangered"}}>音階やハーモニーの学習に適しています。</span>
         <br />
         キーを押しても音が出ない場合は<span style={{color:"orangered"}}>「音を止める」</span>ボタンを一度押してリセットしてください。
-        <br />
-        スマートフォン等で上手く表示されない場合、ブラウザのメニューから「PC版で開く」を選んで表示してください。
       </p>
       {/* <select ref={el_select} onChange={changeGakki} className="select m-8">
         {ITEM.map((item) => {
