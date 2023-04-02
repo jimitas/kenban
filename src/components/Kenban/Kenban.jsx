@@ -159,9 +159,9 @@ export function Kenban(props) {
         <option value="3">表記しない</option>
       </select>
       <label htmlFor="">
-        Volume
+        Vol
         <input
-          style={{ width: "200px" }}
+          style={{ width: "100px" }}
           onChange={changeVolume}
           ref={el_volume}
           type="range"
@@ -181,7 +181,7 @@ export function Kenban(props) {
       </label>
       <label for="checkMark">
         <input type="checkbox" id="checkMark" onChange={changeIsShow3} />
-        しるしをつける
+        印をつける
       </label>
       <label for="sustain">
         <input type="checkbox" id="sustain" onChange={changeIsShow4} />
